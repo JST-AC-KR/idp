@@ -20,7 +20,6 @@ services:
     ports:
     - 4000:4000 
 
-충남대학교
   idp:
     container_name: dscu_idp
     build:

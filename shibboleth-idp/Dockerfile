@@ -77,6 +77,7 @@ RUN wget -q https://shibboleth.net/downloads/identity-provider/archive/$idp_vers
 COPY opt/shibboleth-idp/ $IDP_HOME/
 
 RUN sed -i 's/__IDP_SCOPE__/'${IDP_SCOPE}'/' $IDP_HOME/messages/messages_ko.properties
+RUN sed -i 's/__IDP_HOST_NAME__/'${IDP_HOST_NAME}'/' $IDP_HOME/messages/messages_ko.properties
 RUN sed -i 's/__IDP_ORG_HOMEPAGE__ /'${IDP_ORG_HOMEPAGE}'/' $IDP_HOME/messages/messages_ko.properties
 RUN sed -i 's/__IDP_ORG_DISPLAYNAME__ /'${IDP_ORG_DISPLAYNAME}'/' $IDP_HOME/messages/messages_ko.properties
 RUN sed -i 's/__IDP_FORGOT_PASSWORD_URL__ /'${IDP_FORGOT_PASSWORD_URL}'/' $IDP_HOME/messages/messages_ko.properties

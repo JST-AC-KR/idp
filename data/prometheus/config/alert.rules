@@ -1,5 +1,5 @@
 groups:
-- name: iugj
+- name: dscu
   rules:
   - alert: Docker Unhealthy 상태
     expr: container_state_health_status{name=~"iugj_.+", status="unhealthy"} == 1

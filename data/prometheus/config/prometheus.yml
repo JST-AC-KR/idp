@@ -7,7 +7,7 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'iugj'
+      monitor: 'dscu'
 
 # Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
@@ -43,7 +43,7 @@ scrape_configs:
       module: [http_2xx]
     static_configs:
       - targets:
-        - https://idp.iugj.ac.kr
+        - https://idp.dscu.ac.kr
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

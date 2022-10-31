@@ -81,8 +81,8 @@
                         <img src="$request.getContextPath()#springMessage("idp.logo")" alt="">
                     </div>
                     <div>
-                        <input type="text" placeholder="사용자 아이디">
-                        <input type="password" placeholder="패스워드">
+                        <input form-field" id="username" name="j_username" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
+                        <input form-field" id="password" name="j_password" type="password" value="" />
                     </div>
                     <div>
                         <label>

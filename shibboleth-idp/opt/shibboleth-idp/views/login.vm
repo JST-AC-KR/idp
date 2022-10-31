@@ -85,12 +85,12 @@
                     </div>
                     <div>
                         <label>
-                            <input type="checkbox" name="donotcache" value="1" id="donotcache">
+                            <input type="checkbox" name="donotcache" value="1" id="donotcache" />
                             사용자 아이디 기억하지 않기
                         </label>
                         <label>
                             <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true" />
-                            <label for="_shib_idp_revokeConsent">#springMessageText("idp.attribute-release.revoke", "Clear prior granting of permission for release of your information to this service.")</label>
+                            개인정보제공방식 초기화
                         </label>
                     </div>
                     <button class="btn_submit" type="submit" name="_eventId_proceed"

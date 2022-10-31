@@ -1,0 +1,18 @@
+SERVICE=CNUITDR
+DB_PASSWORD=ris7942s
+DB_USER=cnuris
+DB_PORT=8629
+DB_TYPE=tibero
+HOST=cnuitdri.cnu.ac.kr
+
+AUTH_QUERY=SELECT 'Y' as Result FROM DUAL WHERE LINKMNGT.SF_CNUAUTH_MBRNO_LOGIN_YN(:USSERID,:PASSWORD) = 'Y'
+
+ATTRIBUTE_QUERY=SELECT DISPLAYNAME AS "displayName", USERID AS "uid", USERID || '@cnu.ac.kr' AS "eduPersonPrincipalName", MAIL AS "mail", USERID AS "employeeNumber", 'CNU' as "organizationName", DIVISION_FULL AS "organizationalUnitName", USERTYPE AS "eduPersonScopedAffiliation", GRADE AS "grade" FROM LINKMNGT.VW_RIS_USER WHERE USERID = :USERID
+
+IDP_SCOPE=dscu.ac.kr
+IDP_HOST_NAME=cnu.dscu.ac.kr
+IDP_ENTITYIDr=https://cnu.dscu.ac.kr/idp/shibboleth
+IDP_SSL_PASSWORD=dcsu2022
+IDP_ORG_DISPLAYNAME=충남대학교
+IDP_ORG_HOMEPAGE=https://www.dscu.ac.kr
+

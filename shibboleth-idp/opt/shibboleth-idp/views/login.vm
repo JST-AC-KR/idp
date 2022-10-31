@@ -77,7 +77,7 @@
                     </div>
                     <h3>공동교육학사 관리시스템</h3>
                     <div class="logo">
-                        <img src="$request.getContextPath()/images/logo1.png" alt="">
+                        <img src="$request.getContextPath()#springMessage("idp.logo")" alt="">
                     </div>
                     <div>
                         <input type="text" placeholder="사용자 아이디">

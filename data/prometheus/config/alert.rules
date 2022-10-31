@@ -1,0 +1,48 @@
+groups:
+- name: iugj
+  rules:
+  - alert: Docker Unhealthy 상태
+    expr: container_state_health_status{name=~"iugj_.+", status="unhealthy"} == 1
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: "[iugj.ac.kr] Docker Instance {{$labels.name}} UNHEALTHY"
+      description: "iugj.ac.kr Service {{$labels.name}} is UNHEALTHY"
+
+  - alert: Docker Instance가 중지됨
+    expr: container_state_status{name=~"iugj_.+", status="exited"} == 1
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: "[iugj.ac.kr] Docker Instance {{$labels.name}} Down"
+      description: "iugj.ac.kr Service {{$labels.name}} is Down"
+
+  - alert: OutOfDiskSpace
+    expr: node_filesystem_free_bytes{mountpoint ="/rootfs"} / node_filesystem_size_bytes{mountpoint ="/rootfs"} * 100 < 10
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: "[iugj.ac.kr] Out of disk space (instance {{ $labels.instance }})"
+      description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"    
+
+- name: ssl_expiry
+  rules:
+  - alert: SSL 인증서 30일 이내 만료
+    expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 30
+    for: 1h 
+    labels:
+      severity: warning
+    annotations:
+      summary: "{{ $labels.instance }} 인증서가 곧 만료됩니다."
+      description: "SSL certificate expires in 30 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+- name: node.rules
+  rules:
+  - alert: DiskWillFillIn4Hours
+    expr: predict_linear(node_filesystem_free{job="node"}[1h], 4 * 3600) < 0
+    for: 5m
+    labels:
+      severity: page

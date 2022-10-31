@@ -1,0 +1,201 @@
+version: "3.1"
+services:
+  rest:
+    container_name: dscu_rest
+    image: docker.iugj.ac.kr/rest-tibero:v6
+    environment:
+    - TZ=Asia/Seoul
+    - LANG=ko_KR.UTF-8
+    - DB_USER
+    # - PASSWORD=/run/secrets/PASSWORD for HA config
+    - DB_PASSWORD
+    - SERVICE
+    - HOST
+    - DB_PORT
+    - DB_TYPE
+    - AUTH_QUERY=SELECT 'Y' as Result FROM DUAL WHERE LINKMNGT.SF_CNUAUTH_MBRNO_LOGIN_YN(:USSERID,:PASSWORD) = 'Y'
+    - ATTRIBUTE_QUERY=SELECT DISPLAYNAME AS "displayName", USERID AS "uid", USERID || '@cnu.ac.kr' AS "eduPersonPrincipalName", MAIL AS "mail", USERID AS "employeeNumber", 'CNU' as "organizationName", DIVISION_FULL AS "organizationalUnitName", USERTYPE AS "eduPersonScopedAffiliation", GRADE AS "grade" FROM LINKMNGT.VW_RIS_USER WHERE USERID = :USERID
+    # secrets:
+      # DB_PASSWORD
+    ports:
+    - 4000:4000 
+
+  idp:
+    container_name: dscu_idp
+    build:
+        context: ./shibboleth-idp/
+        args:
+            - IDP_SCOPE=dscu.ac.kr
+            - IDP_HOST_NAME=cnu.dscu.ac.kr 
+            - IDP_ENTITYID=https://cnu.dscu.ac.kr/idp/shibboleth
+            - IDP_KEYSTORE_PASSWORD=dcsu2022
+            - IDP_SEALER_PASSWORD=dcsu2022
+            - IDP_ORG_DISPLAYNAME=빛가람대학교
+            - IDP_ORG_HOMEPAGE=http://www.iugj.ac.kr
+            - IDP_FORGOT_PASSWORD_URL=http://www.iugj.ac.kr/forgot-password
+            - IDP_CHANGE_PASSWORD_URL=http://www.iugj.ac.kr/change-password
+            - IDP_SUPPORT_URL=https://support.example.org/help
+            - IDP_LOGIN_TO_MSG=<p>서비스 사용을 위해 <strong>빛가람 대학 인증서버를 선택</strong>한 사용자입니다.</p> <p>■ 해당 서비스에 로그인하기 위해 <strong>광주전남 지역혁신 플랫폼 아이디와 패스워드</strong>를 입력하세요.</p>
+
+
+    image: docker.iugj.ac.kr/iugj/shibboleth-idp:latest
+    # image:  jnu-idp:latest
+    environment:
+     - TZ=Asia/Seoul
+     - LANG=ko_KR.UTF-8
+    ports:
+    - 443:443
+    - 80:80
+    depends_on:
+    - rest
+    links:
+    - rest:rest 
+    # secrets: #for HA
+    # - DB_PASSWORD
+    # - REALM
+    # volumes:
+      # - ./logs:/opt/shib-jetty-base/logs
+    # deploy:
+    #     mode: replicated
+    #     replicas: 2
+    #     
+#  blackbox_exporter:
+#    image: prom/blackbox-exporter
+#    container_name: monitoring_blackbox_exporter
+#    dns: 8.8.8.8
+#    restart: always
+#    expose:
+#      - 9115
+#    volumes:
+#      - "./data/blackbox-exporter/config:/config"
+#    command: --config.file=/config/blackbox.yml    
+
+#  alertmanager_telegram:
+#    image: janwh/alertmanager-telegram
+#    build:
+#     context: ./alertmanager-telegram
+#    container_name: monitoring_alertmanager-telegram
+#    restart: unless-stopped
+#    environment:
+#      - TELEGRAM_CHAT_ID=-640180967
+#      - TELEGRAM_TOKEN=5197115862:AAFfRyRW0ROpQXHWnIQrvybO3zWy4yhXocQ 
+#    expose:
+#      - 8080
+#    volumes:
+#      - ./data/alertmanager-telegram/config/template.html:/templates/default.html
+
+#  prometheus_telegram_bot:
+#    image: docker.iugj.ac.kr/prometheus_telegram_bot:latest
+#    build:
+#      context: ./prometheus_telegram_bot/
+#    container_name: monitoring_prometheus_telegram_bot
+#    restart: unless-stopped
+#    expose:
+#      - 9087
+#    volumes:
+#      - ./data/prometheus_telegram_bot/config:/etc/prometheus_telegram_bot/
+
+#  prometheus:
+#    image: prom/prometheus:latest
+#    user: 1000:1000
+#    container_name: monitoring_prometheus
+#    restart: unless-stopped
+#    volumes:
+#      - ./data/prometheus/config:/etc/prometheus/
+#      - ./data/prometheus/data:/prometheus
+#    command:
+#      - '--config.file=/etc/prometheus/prometheus.yml'
+#      - '--storage.tsdb.path=/prometheus'
+#    expose:
+#      - 9090
+#    ports:
+#      - 9090:9090
+#    links:
+#      - cadvisor:cadvisor
+#      - node-exporter:node-exporter
+#      - alertmanager:alertmanager
+#      - rest:rest
+#      - idp:idp.iugj.ac.kr
+#      - docker_state_exporter:docker_state_exporter
+#      - blackbox_exporter:blackbox_exporter
+#    depends_on:
+#    - alertmanager
+#    - docker_state_exporter
+#    - blackbox_exporter
+#    - node-exporter
+
+#  alertmanager:
+#    image: quay.io/prometheus/alertmanager
+#    container_name: monitoring_alertmanager
+#    ports:
+#      - 9093:9093
+#    volumes:
+#      - ./data/alertmanager/config:/etc/alertmanager/
+#    command:
+#      - '--config.file=/etc/alertmanager/alertmanager.yml'
+#      - '--storage.path=/alertmanager'
+#    links:
+            #      - prometheus_telegram_bot:prometheus_telegram_bot 
+#      - alertmanager_telegram:alertmanager_telegram
+#    depends_on:
+#    - alertmanager_telegram
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: monitoring_node_exporter
+    restart: unless-stopped
+    expose:
+      - 9100
+
+#  cadvisor:
+#    privileged: true
+#    image: google/cadvisor:latest
+#    container_name: monitoring_cadvisor
+#    restart: unless-stopped
+#    volumes:
+#      - /:/rootfs:ro
+#      - /var/run:/var/run:rw
+#      - /sys:/sys:ro
+#      - /var/lib/docker/:/var/lib/docker:ro
+#      - /dev:/dev:ro
+#    expose:
+#      - 8080
+
+#  docker_state_exporter:
+#    image: karugaru/docker_state_exporter
+#    container_name: monitoring_docker_state_exporter
+#    privileged: true
+#    volumes:
+#      - type: bind
+#        source: /var/run/docker.sock
+#        target: /var/run/docker.sock
+#    ports:
+#      - 8080:8080
+
+#  grafana:
+#    image: grafana/grafana:latest
+#    user: 1000:1000
+#    container_name: monitoring_grafana
+#    restart: unless-stopped
+#    ports:
+#      - 3000:3000
+#    volumes:
+#    links:
+#      - prometheus:prometheus
+#    volumes:
+#      - ./data/grafana:/var/lib/grafana
+#    environment:
+#      - GF_SECURITY_ADMIN_PASSWORD=wjsskaeo1!
+#      - GF_USERS_ALLOW_SIGN_UP=false
+#      - GF_SERVER_DOMAIN=idp.iugj.ac.kr
+#      - GF_SMTP_ENABLED=true
+#      - GF_SMTP_HOST=smtp.gmail.com:587
+#      - GF_SMTP_USER=narzis@gmail.com
+#      - GF_SMTP_PASSWORD=G_fbrudtjrWkd!0
+#      - GF_SMTP_FROM_ADDRESS=narzis@gmail.com
+
+secrets:
+    DB_PASSWORD:
+      file: DB_PASSWORD.txt
+    REALM:
+      file: REALM.txt

@@ -1,0 +1,6 @@
+shibboleth-idp/.env
+shibboleth-idp/docker-compose.yml
+shibboleth-idp/opt/shibboleth-idp/credentials
+shibboleth-idp/opt/shibboleth-idp/metadata
+data/prometheus/data
+.devcontainer

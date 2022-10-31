@@ -61,7 +61,7 @@
             .illu {width:100%;margin-top:-48%;}
             .login_area {width:300px;}
         }
-    </link>
+    </style>
     </head>
     <body>
     <div class="wrap">

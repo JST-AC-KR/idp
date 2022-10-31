@@ -32,7 +32,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>#springMessageText("idp.title", "Web Login Service")</title>
-        <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/font.css">
+        <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/font.css" />
         <style>
         * {margin:0;padding:0; box-sizing:border-box;font-family:'Noto Sans KR', sans-serif; font-weight:400; }
         a {color:inherit; text-decoration:none;}
@@ -66,30 +66,38 @@
     <body>
     <div class="wrap">
     <div class="login">
+            #parse("login-error.vm")
             <div class="illu">
                 <img src="$request.getContextPath()/images/Illustration.png" alt="">
             </div>
             <div class="login_area">
-                <div class="sub_logo">
-                    <img src="$request.getContextPath()/images/sub_logo.png" alt="">
-                </div>
-                <h3>공동교육학사 관리시스템</h3>
-                <div class="logo">
-                    <img src="$request.getContextPath()/images/logo1.png" alt="">
-                </div>
-                <div>
-                    <input type="text" placeholder="사용자 아이디">
-                    <input type="password" placeholder="패스워드">
-                </div>
-                <div>
-                    <label>
-                        <input type="checkbox" >사용자 아이디 기억하기
-                    </label>
-                    <label>
-                        <input type="checkbox" >개인정보제공방식 초기화
-                    </label>
-                </div>
-                <button>Login</button>
+                <form action="$flowExecutionUrl" method="post">
+                    <div class="sub_logo">
+                        <img src="$request.getContextPath()/images/sub_logo.png" alt="">
+                    </div>
+                    <h3>공동교육학사 관리시스템</h3>
+                    <div class="logo">
+                        <img src="$request.getContextPath()/images/logo1.png" alt="">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="사용자 아이디">
+                        <input type="password" placeholder="패스워드">
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="donotcache" value="1" id="donotcache">
+                            사용자 아이디 기억하지 않기
+                        </label>
+                        <label>
+                            <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true" />
+                            <label for="_shib_idp_revokeConsent">#springMessageText("idp.attribute-release.revoke", "Clear prior granting of permission for release of your information to this service.")</label>
+                        </label>
+                    </div>
+                    <button class="btn_submit" type="submit" name="_eventId_proceed"
+                        onClick="this.childNodes[0].nodeValue='#springMessageText("idp.login.pleasewait", "Logging in, please wait...")'"
+                        >#springMessageText("idp.login.login", "Login")
+                    </button>
+                </form>
             </div>
         </div>
     </div>

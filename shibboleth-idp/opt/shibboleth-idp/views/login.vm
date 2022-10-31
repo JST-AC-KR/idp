@@ -72,6 +72,7 @@
             </div>
             <div class="login_area">
                 <form action="$flowExecutionUrl" method="post">
+                    #parse("csrf/csrf.vm")
                     <div class="sub_logo">
                         <img src="$request.getContextPath()/images/sub_logo.png" alt="">
                     </div>

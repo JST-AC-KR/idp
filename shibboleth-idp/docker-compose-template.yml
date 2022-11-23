@@ -2,19 +2,20 @@ version: "3.1"
 services:
   rest:
     restart: unless-stopped
-    image: docker.changeme.ac.kr/rest-oracle:latest
+    image: docker.iugj.ac.kr/rest-oracle:metric
     environment:
     - TZ=Asia/Seoul
     - LANG=ko_KR.UTF-8
     - DB_USER=hr
     # - PASSWORD=/run/secrets/PASSWORD for HA config
-    - DB_PASSWORD=${DB_PASSWORD}
+    - DB_PASSWORD=dbuserPassW0rd
     - SERVICE=xe
     - HOST=52.79.152.235
     - DB_PORT=49161
     - DB_TYPE=oracle
     - AUTH_QUERY=SELECT * HR.EMPLOYEES WHERE EMPLOYEE_ID = :USERID and PASSWORD=:PASSWORD
     - ATTRIBUTE_QUERY=SELECT CONCAT(FIRST_NAME, LAST_NAME) AS "displayName", EMPLOYEE_ID AS "uid", EMAIL AS "mail", EMPLOYEE_ID AS "employeeNumber", 'IU-GJ' as "organizationName", 'univcode' as "organizationCode",  DEPARTMENT_ID as "division", 'student' as "userType" FROM HR.EMPLOYEES WHERE EMPLOYEE_ID = :USERID
+    - ASPNETCORE_hostBuilder__reloadConfigOnChange=false
     # secrets:
       # DB_PASSWORD
     networks:

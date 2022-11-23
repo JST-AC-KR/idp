@@ -2,7 +2,7 @@ version: "3.1"
 services:
   rest:
     container_name: dscu_rest
-    image: docker.iugj.ac.kr/rest-tibero:v6
+    image: docker.iugj.ac.kr/rest-oracle:latest
     environment:
     - TZ=Asia/Seoul
     - LANG=ko_KR.UTF-8

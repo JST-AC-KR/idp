@@ -1,5 +1,5 @@
 .env
-shibboleth-idp/opt/shibboleth-idp/credentials
 shibboleth-idp/opt/shibboleth-idp/metadata
 data/prometheus/data
 .devcontainer
+.DS_Store

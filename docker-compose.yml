@@ -4,6 +4,7 @@ services:
     container_name: dscu_rest
     image: docker.iugj.ac.kr/rest-tibero:v6
     environment:
+    - ASPNETCORE_ENVIRONMENT=Development
     - TZ=Asia/Seoul
     - LANG=ko_KR.UTF-8
     - DB_USER

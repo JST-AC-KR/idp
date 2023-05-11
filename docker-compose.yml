@@ -2,7 +2,7 @@ version: "3.1"
 services:
   rest:
     container_name: dscu_rest
-    image: docker.iugj.ac.kr/rest-oracle:latest
+    image: ${REST_IMAGE_NAME}
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
     - TZ=Asia/Seoul

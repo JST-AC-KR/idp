@@ -19,6 +19,7 @@ ENV jetty_version=9.4.34.v20201102 \
     mariadb_hash=5fafee1aad82be39143b4bfb8915d6c2d73d860938e667db8371183ff3c8500a
 
 ARG IDP_SCOPE 
+ARG IDP_SCOPE_DOMAIN 
 ARG IDP_HOST_NAME 
 ARG IDP_ENTITYID 
 ARG IDP_KEYSTORE_PASSWORD 
@@ -57,10 +58,12 @@ RUN wget -q https://shibboleth.net/downloads/identity-provider/archive/$idp_vers
     && tar -zxvf  shibboleth-identity-provider-$idp_version.tar.gz -C /opt \
     && S=$IDP_SRC/idp.merge.properties \
     && echo idp.scope=${IDP_SCOPE}>>$S \
+    && echo idp.scope_domain=${IDP_SCOPE_DOMAIN}>>$S \
     && echo idp.entityID=${IDP_ENTITYID}>>$S \
     && echo idp.status.accessPolicy=status.AccessByIPAddress>>$S \
     && $IDP_SRC/bin/install.sh \
     -Didp.scope=${IDP_SCOPE} \
+    -Didp.scope_domain=${IDP_SCOPE_DOMAIN} \
     -Didp.target.dir=$IDP_HOME \
     -Didp.src.dir=$IDP_SRC \
     -Didp.host.name=${IDP_HOST_NAME} \
@@ -77,6 +80,7 @@ RUN wget -q https://shibboleth.net/downloads/identity-provider/archive/$idp_vers
 COPY opt/shibboleth-idp/ $IDP_HOME/
 
 RUN sed -i 's/__IDP_SCOPE__/'${IDP_SCOPE}'/' $IDP_HOME/messages/messages_ko.properties
+RUN sed -i 's/__IDP_SCOPE_DOMAIN__/'${IDP_SCOPE_DOMAIN}'/' $IDP_HOME/messages/messages_ko.properties
 RUN sed -i 's/__IDP_HOST_NAME__/'${IDP_HOST_NAME}'/' $IDP_HOME/messages/messages_ko.properties
 RUN sed -i 's/__IDP_ORG_HOMEPAGE__ /'${IDP_ORG_HOMEPAGE}'/' $IDP_HOME/messages/messages_ko.properties
 RUN sed -i 's/__IDP_ORG_DISPLAYNAME__ /'${IDP_ORG_DISPLAYNAME}'/' $IDP_HOME/messages/messages_ko.properties
@@ -135,7 +139,6 @@ ENV JETTY_HOME=/opt/jetty-home \
 #establish a healthcheck command so that docker might know the container's true state
 HEALTHCHECK --interval=1m --timeout=30s \
     CMD curl -k -f http://localhost/idp/status || exit 1
-
 
 
 CMD /opt/jetty-home/bin/jetty.sh run

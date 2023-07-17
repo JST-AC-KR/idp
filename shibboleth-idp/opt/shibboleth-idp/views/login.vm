@@ -59,6 +59,17 @@
         .login_area > form > div > label input {margin-right:10px; vertical-align:top; margin-top:3px;}
         .login_area > form > button {width:84%; margin-top:10px;padding:14px 0; border-radius:5px; background:#90C521; box-shadow:0 10px 20px rgba(0,0,0,0.2); color:#fff; font-size:16px; font-weight:500;}
 
+        .login_area > form > div > label.notice-title {
+            color: black;
+            font-weight: 600;
+            font-size: medium;
+        }
+
+        .login_area > form > div > label.notice-message {
+            color: darkgrey;
+            font-size: medium;
+        }
+            
         @media all and (max-width:768px) {
             .wrap {height:100%;display:block;}
             .login {width:100%;flex-wrap:wrap; flex-direction:column;}
@@ -85,30 +96,19 @@
 		    <div class="logo">
 			<img src="$request.getContextPath()#springMessage("idp.logo")" alt="">
 		    </div>
-		    <div class="user_type">
-			<div class="form-check-inline">
-			    <label class="form-check-label">
-				<input type="radio" checked class="form-check-input" name="usertype" value="student">학생
-			    </label>
-			</div>
-			<div class="form-check-inline">
-			    <label class="form-check-label">
-				<input type="radio" class="form-check-input" name="usertype" value="professor">교수
-			    </label>
-			</div>
-			<div class="form-check-inline">
-			    <label class="form-check-label">
-				<input type="radio" class="form-check-input" name="usertype" value="staff">교직원
-			    </label>
-			</div>
-		    </div>
+		    
 		    <div>
-			<input form-field" id="username_temp" name="j_username_temp" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
-			<input form-field" id="username" name="j_username" type="hidden" value="#if($username)$encoder.encodeForHTML($username)#end" />
+			<input form-field" id="username" name="j_username" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
 			<input form-field" id="password" name="j_password" type="password" value="" />
 		    </div>
+            <div class="notice">
+                <label class="notice-title">&lt;ID안내&gt;</label>
+                <label class="notice-message">학생: 학번을 기입해주세요.</label>
+                <label class="notice-message">교수: 교번 앞에 대문자 "F"를 붙여서 기입해주세요. (예: F20201234)</label>
+                <label class="notice-message">직원: 교번 앞에 대문자 "E"를 붙여서 기입해주세요. (예: E20205678)</label>
+            </div>
 		    <div>
-			<label>
+			<label style="margin: 10px 0 0 0">
 			    <input type="checkbox" name="donotcache" value="1" id="donotcache" />
 			    사용자 아이디 기억하지 않기
 			</label>
@@ -117,26 +117,11 @@
 			    개인정보제공방식 초기화
 			</label>
 		    </div>
-    <button class="btn_submit" type="submit" name="_eventId_proceed"
-        onClick="onClickSubmit();">#springMessageText("idp.login.login", "Login")
-    </button>
-</form>
-
-<script>
-    function onClickSubmit() {
-        var userType = document.querySelector('input[name="usertype"]:checked').value;
-        var usernameTemp = document.getElementById("username_temp").value;
-
-        if (userType === "professor") {
-            document.getElementById("username").value = "F" + usernameTemp;
-        } else if (userType === "staff") {
-            document.getElementById("username").value = "E" + usernameTemp;
-        } else {
-            document.getElementById("username").value = usernameTemp;
-        }
-    }
-</script>
-
+            <button class="btn_submit" type="submit" name="_eventId_proceed"
+                onClick="this.childNodes[0].nodeValue='#springMessageText("idp.login.pleasewait", "Logging in, please wait...")'"
+                >#springMessageText("idp.login.login", "Login")
+            </button>
+        </form>
             </div>
         </div>
     </div>

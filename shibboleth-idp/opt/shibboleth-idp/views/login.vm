@@ -48,6 +48,10 @@
         .login_area .sub_logo {width:297px;}
         .login_area h3 {margin-top:-18px;color:#2A3140; font-size:24px; font-weight:700;}
         .login_area .logo {width:205px;margin:12px;}
+	
+        .login_area .user_type {display: flex; justify-content: space-between; }
+	.login_area .user_type .form-check-label > radio { margin: 10px 0 0 0}
+
         .login_area > form > div {width:84%;}
         .login_area > form > div > input {width:100%;padding:12px;border-radius:5px; border:1px solid #D1DBE3; margin-bottom:10px; color:#4f6c81; font-size:12px; }
         .login_area > form > div > input::placeholder {color:#9DAFBD; font-size:12px; font-weight:300;}
@@ -61,6 +65,7 @@
             .illu {width:100%;margin-top:-48%;}
             .login_area {width:300px;}
         }
+	
     </style>
     </head>
     <body>
@@ -72,36 +77,70 @@
             </div>
             <div class="login_area">
                 <form action="$flowExecutionUrl" method="post">
-                    #parse("csrf/csrf.vm")
-                    <div class="sub_logo">
-                        <img src="$request.getContextPath()/images/sub_logo.png" alt="">
-                    </div>
-                    <h3>공동교육학사 관리시스템</h3>
-                    <div class="logo">
-                        <img src="$request.getContextPath()#springMessage("idp.logo")" alt="">
-                    </div>
-                    <div>
-                        <input form-field" id="username" name="j_username" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
-                        <input form-field" id="password" name="j_password" type="password" value="" />
-                    </div>
-                    <div>
-                        <label>
-                            <input type="checkbox" name="donotcache" value="1" id="donotcache" />
-                            사용자 아이디 기억하지 않기
-                        </label>
-                        <label>
-                            <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true" />
-                            개인정보제공방식 초기화
-                        </label>
-                    </div>
-                    <button class="btn_submit" type="submit" name="_eventId_proceed"
-                        onClick="this.childNodes[0].nodeValue='#springMessageText("idp.login.pleasewait", "Logging in, please wait...")'"
-                        >#springMessageText("idp.login.login", "Login")
-                    </button>
-                </form>
+		    #parse("csrf/csrf.vm")
+		    <div class="sub_logo">
+			<img src="$request.getContextPath()/images/sub_logo.png" alt="">
+		    </div>
+		    <h3>공동교육학사 관리시스템</h3>
+		    <div class="logo">
+			<img src="$request.getContextPath()#springMessage("idp.logo")" alt="">
+		    </div>
+		    <div class="user_type">
+			<div class="form-check-inline">
+			    <label class="form-check-label">
+				<input type="radio" checked class="form-check-input" name="usertype" value="student">학생
+			    </label>
+			</div>
+			<div class="form-check-inline">
+			    <label class="form-check-label">
+				<input type="radio" class="form-check-input" name="usertype" value="professor">교수
+			    </label>
+			</div>
+			<div class="form-check-inline">
+			    <label class="form-check-label">
+				<input type="radio" class="form-check-input" name="usertype" value="staff">교직원
+			    </label>
+			</div>
+		    </div>
+		    <div>
+			<input form-field" id="username_temp" name="j_username_temp" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
+			<input form-field" id="username" name="j_username" type="hidden" value="#if($username)$encoder.encodeForHTML($username)#end" />
+			<input form-field" id="password" name="j_password" type="password" value="" />
+		    </div>
+		    <div>
+			<label>
+			    <input type="checkbox" name="donotcache" value="1" id="donotcache" />
+			    사용자 아이디 기억하지 않기
+			</label>
+			<label>
+			    <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true" />
+			    개인정보제공방식 초기화
+			</label>
+		    </div>
+    <button class="btn_submit" type="submit" name="_eventId_proceed"
+        onClick="onClickSubmit();">#springMessageText("idp.login.login", "Login")
+    </button>
+</form>
+
+<script>
+    function onClickSubmit() {
+        var userType = document.querySelector('input[name="usertype"]:checked').value;
+        var usernameTemp = document.getElementById("username_temp").value;
+
+        if (userType === "professor") {
+            document.getElementById("username").value = "F" + usernameTemp;
+        } else if (userType === "staff") {
+            document.getElementById("username").value = "E" + usernameTemp;
+        } else {
+            document.getElementById("username").value = usernameTemp;
+        }
+    }
+</script>
+
             </div>
         </div>
     </div>
 
      </body>
+</script>
 </html>

@@ -1,6 +1,7 @@
 version: "3.1"
 services:
   rest:
+    restart: unless-stopped
     container_name: dscu_rest
     image: ${REST_IMAGE_NAME}
     environment:
@@ -22,11 +23,13 @@ services:
     - 4000:4000 
 
   idp:
+    restart: unless-stopped
     container_name: dscu_idp
     build:
         context: ./shibboleth-idp/
         args:
             - IDP_SCOPE=${IDP_SCOPE}
+            - IDP_SCOPE_DOMAIN=${IDP_SCOPE_DOMAIN}
             - IDP_HOST_NAME=${IDP_HOST_NAME}
             - IDP_ENTITYID=${IDP_ENTITYID}
             - IDP_KEYSTORE_PASSWORD=${IDP_SSL_PASSWORD}

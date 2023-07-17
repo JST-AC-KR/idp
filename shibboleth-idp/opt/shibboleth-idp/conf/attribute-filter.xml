@@ -42,7 +42,7 @@
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>
     </AttributeFilterPolicy>
-    <!-- https://lms.jnu.ac.kr/ -->
+    <!-- https://ecampus.jnu.ac.kr/ -->
     <AttributeFilterPolicy id="lmssp">
         <PolicyRequirementRule xsi:type="Requester" value="https://ecampus.dscu.ac.kr/auth/saml2/sp/metadata.php" />
         <!-- 학과 -->

@@ -85,26 +85,8 @@
 		    <div class="logo">
 			<img src="$request.getContextPath()#springMessage("idp.logo")" alt="">
 		    </div>
-		    <div class="user_type">
-			<div class="form-check-inline">
-			    <label class="form-check-label">
-				<input type="radio" checked class="form-check-input" name="usertype" value="student">학생
-			    </label>
-			</div>
-			<div class="form-check-inline">
-			    <label class="form-check-label">
-				<input type="radio" class="form-check-input" name="usertype" value="professor">교수
-			    </label>
-			</div>
-			<div class="form-check-inline">
-			    <label class="form-check-label">
-				<input type="radio" class="form-check-input" name="usertype" value="staff">교직원
-			    </label>
-			</div>
-		    </div>
 		    <div>
-			<input form-field" id="username_temp" name="j_username_temp" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
-			<input form-field" id="username" name="j_username" type="hidden" value="#if($username)$encoder.encodeForHTML($username)#end" />
+			<input form-field" id="username" name="j_username" type="text" value="#if($username)$encoder.encodeForHTML($username)#end" />
 			<input form-field" id="password" name="j_password" type="password" value="" />
 		    </div>
 		    <div>

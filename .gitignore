@@ -3,3 +3,4 @@ shibboleth-idp/opt/shibboleth-idp/metadata
 data/prometheus/data
 .devcontainer
 .DS_Store
+ssl

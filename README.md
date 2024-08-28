@@ -1,4 +1,4 @@
-# DSCU Shibboleth IdP installer
+# JST Shibboleth IdP installer
 ## 1.사전준비
 #### 1.1 VM서버
 - 기본사양 메모리4G이상, Disk50GB이상, CPU4코어이상 

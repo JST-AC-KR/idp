@@ -19,7 +19,7 @@
 
 #### 1.5 DNS 등록 
 - 호스명 idp 또는 sidp 추천
-- 학교도메인.dscu.ac.kr (myuniv.dscu.ac.kr) 
+- 학교도메인.jst.ac.kr (myuniv.jst.ac.kr) 
 
 #### 1.6 docker 설치
     sudo timedatectl set-timezone Asia/Seoul
@@ -61,7 +61,7 @@
 
 #### 1.9 Github에서 idP installer 다운로드(사용자의 github 계정에 접근권한 승인받은 후 사용 가능)
     cd $HOME
-    git clone https://github.com/DSCU/shibboleth-idp.git   
+    git clone https://github.com/jst/shibboleth-idp.git   
     Username: YOUR_USERNAME
     Password: YOUR_TOKEN
 
@@ -99,9 +99,9 @@
 
     ATTRIBUTE_QUERY=SELECT USERNAME as "uid", USERNAME || '@myuniv.ac.kr' AS eduPersonPrincipalName, USERTYPE || '@myuniv.ac.kr' AS eduPersonScopedAffiliation, FIRST_NAME || LAST_NAME as "displayName", 'Department of Mechanical Engineering' as "organizationalUnitName", 'Bitgaram       Univ.' as "organizationName", EMAIL as "mail", 'student' as "eduPersonAffiliation", '987654' as "employNumber" FROM USERS WHERE USERNAME=:USERID
     
-    IDP_SCOPE=dscu.ac.kr
-    IDP_HOST_NAME=myuniv.dscu.ac.kr
-    IDP_ENTITYID=https://myuniv.dscu.ac.kr/idp/shibboleth
+    IDP_SCOPE=jst.ac.kr
+    IDP_HOST_NAME=myuniv.jst.ac.kr
+    IDP_ENTITYID=https://myuniv.jst.ac.kr/idp/shibboleth
     IDP_SSL_PASSWORD=xxxxxx
     IDP_ORG_DISPLAYNAME=빛가람대학교
     IDP_ORG_HOMEPAGE=https://www.univ.ac.kr
@@ -135,12 +135,12 @@
 
 
 ## 6.메타데이터 확인
-    https://youre_domain.dscu.ac.kr/idp/shibboleth
+    https://youre_domain.jst.ac.kr/idp/shibboleth
 
 ## 7.메타데이터 등록
 - 위의 메타데이터를 다운로드 받아 
 - https://registry.iugj.ac.kr/rr3 웹사이트에 등록
 
 ## 8.테스트 및 검증
-- https://dev.dscu.ac.kr/simplesamlphp
+- https://dev.jst.ac.kr/simplesamlphp
 - [**Authentication**] 탭 > **Test configured authentication sources** > **default-sp** 클릭하여 소속대학 선택 후 인증 및 속성값 검증

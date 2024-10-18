@@ -50,19 +50,19 @@
      <MetadataProvider id="LMS_SP" xsi:type="FilesystemMetadataProvider" metadataFile="%{idp.home}/metadata/lms-sp-metadata.xml"/> 
 -->
     <MetadataProvider 
-	    id="dscu-federation" 
+	    id="jst-univ-federation" 
 	    xsi:type="FileBackedHTTPMetadataProvider" 
-	    backingFile="%{idp.home}/metadata/dscu-federation.xml" 
-	    metadataURL="https://registry.iugj.ac.kr/rr3/metadata/federation/dscu_ac_kr/SP/metadata.xml"
+	    backingFile="%{idp.home}/metadata/jst-univ-federation.xml" 
+	    metadataURL="https://registry.jst.ac.kr/rr3/metadata/federation/jst-univ/SP/metadata.xml"
 	    initializeFromBackupFile="true"
 	    >
     </MetadataProvider>
 
     <MetadataProvider 
-	    id="dscu-test-federation" 
+	    id="jst-test-federation" 
 	    xsi:type="FileBackedHTTPMetadataProvider" 
-	    backingFile="%{idp.home}/metadata/dscu-test-federation.xml" 
-	    metadataURL="https://registry.iugj.ac.kr/rr3/metadata/federation/dscu-test/SP/metadata.xml"
+	    backingFile="%{idp.home}/metadata/jst-test-federation.xml" 
+	    metadataURL="https://registry.jst.ac.kr/rr3/metadata/federation/jst-test/SP/metadata.xml"
 	    initializeFromBackupFile="true"
 	    >
     </MetadataProvider>

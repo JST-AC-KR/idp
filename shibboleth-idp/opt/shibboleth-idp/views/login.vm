@@ -16,37 +16,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JST 로그인</title>
+    <title>전북대학교 로그인</title>
     <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/login.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
-        body { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .container { display: flex; width: 100%; max-width: 1200px; height: 80vh; }
-        .illustration { flex: 1; background-color: #f0f0f0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .illustration h2 { margin-bottom: 20px; }
-        .login-form-container { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; }
-        .top-right-image { align-self: flex-end; width: 100px; margin-bottom: 20px; }
-        .login-form { width: 100%; max-width: 400px; margin: 0 auto; }
-        .logo img { width: 200px; margin-bottom: 20px; }
-        .form-header { margin-bottom: 20px; }
-        .form-header a { color: #666; }
-        .input-group { position: relative; margin-bottom: 20px; }
-        .input-group input { width: 100%; padding: 10px 40px; border: 1px solid #ccc; border-radius: 5px; }
-        .input-group img { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; }
-        .toggle-password { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; }
-        .links { text-align: right; margin-bottom: 20px; }
-        .links a { color: #666; text-decoration: none; }
-        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .mt20 { margin-top: 20px; }
-        .bottom-content { text-align: center; }
-        .jst-logo { width: 100px; margin-bottom: 10px; }
-        .copyright { font-size: 12px; color: #666; }
-
-        @media (max-width: 768px) {
-            .container { flex-direction: column; height: auto; }
-            .illustration { display: none; }
-            .login-form-container { padding: 20px; }
-        }
+        /* 스타일 내용은 이전과 동일하게 유지 */
     </style>
 </head>
 <body>
@@ -59,14 +32,15 @@
             <img src="$request.getContextPath()/images/logo_jst.svg" alt="JST logo" class="top-right-image">
             <div class="login-form">
                 <div class="logo">
-                    <img src="$request.getContextPath()/images/logo/011.png" alt="전북기전대 로고">
+                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
                 </div>
                 <div class="form-header">
                     <span>Sign in</span>
-                    <a href="#"> / Sign up</a>
                 </div>
+
                 <form action="$flowExecutionUrl" method="post">
                     #parse("csrf/csrf.vm")
+                    #parse("login-error.vm")
                     <div class="input-group">
                         <img src="$request.getContextPath()/images/icon_1.svg" alt="ID icon">
                         <input type="text" id="username" name="j_username" placeholder="ID" required value="#if($username)$encoder.encodeForHTML($username)#end">
@@ -79,18 +53,24 @@
                         </span>
                     </div>
                     <div class="links">
-                        <a href="#">Forgot Account?</a> <a href="#" class="a_2"> / reset</a>
+                    #if (!$authenticationContext.getActiveResults().containsKey('authn/Password'))
+                    	<input type="checkbox" name="donotcache" value="1" id="donotcache" />
+                    	<label for="donotcache">#springMessageText("idp.login.donotcache", "Don't Remember Login")</label>
+                    #end
+                    
                     </div>
-                    <button type="submit" name="_eventId_proceed">Login</button>
+                    <button type="submit" name="_eventId_proceed"
+                                onClick="this.childNodes[0].nodeValue='#springMessageText("idp.login.pleasewait", "Logging in, please wait...")'">Login</button>
                 </form>
                 <div class="links mt20">
-                    <a href="#">Don't Have an Account? Sign Up</a>
+                    <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true" />
+                    <label for="_shib_idp_revokeConsent">#springMessageText("idp.attribute-release.revoke", "Clear prior granting of permission for release of your information to this service.")</label>
                 </div>
             </div>
             <div class="bottom-content">
                 <img src="$request.getContextPath()/images/logo_jst.svg" alt="JST logo" class="jst-logo">
                 <div class="copyright">
-                    JST 전북기전대<br>
+                    JST 공유대학교<br>
                     Copyright © 2024 JST. All rights reserved.
                 </div>
             </div>

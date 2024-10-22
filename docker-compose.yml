@@ -29,6 +29,7 @@ services:
         context: ./shibboleth-idp/
         args:
             - IDP_SCOPE=${IDP_SCOPE}
+            - IDP_LOGO=${IDP_LOGO}
             - IDP_SCOPE_DOMAIN=${IDP_SCOPE_DOMAIN}
             - IDP_HOST_NAME=${IDP_HOST_NAME}
             - IDP_ENTITYID=${IDP_ENTITYID}

@@ -71,6 +71,7 @@ RUN wget -q https://shibboleth.net/downloads/identity-provider/archive/$idp_vers
     -Didp.sealer.password=${IDP_SEALER_PASSWORD} \
     -Didp.keystore.password=${IDP_KEYSTORE_PASSWORD} \
     -Didp.entityID=${IDP_ENTITYID} \
+    -Didp.css=/css/login.css \
     -Didp.merge.properties=idp.merge.properties \
     -Didp.initial.modules=+idp.intercept.Consent \
     && rm shibboleth-identity-provider-$idp_version.tar.gz \

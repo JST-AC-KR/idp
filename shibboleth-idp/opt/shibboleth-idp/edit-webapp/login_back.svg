@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="799.878" height="803.08" viewBox="0 0 799.878 803.08">
+  <defs>
+    <filter id="Background" x="0" y="0" width="799.878" height="803.08" filterUnits="userSpaceOnUse">
+      <feOffset dx="-20" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur"/>
+      <feFlood flood-opacity="0.161" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g data-type="innerShadowGroup">
+    <path id="Background-2" data-name="Background" d="M28.9,0H707.386V803.08H-92.492Z" transform="translate(707.386 803.08) rotate(180)" fill="#525ee0"/>
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Background)">
+      <path id="Background-3" data-name="Background" d="M28.9,0H707.386V803.08H-92.492Z" transform="translate(707.39 803.08) rotate(180)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

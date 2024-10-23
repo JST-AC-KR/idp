@@ -1,0 +1,113 @@
+##
+## Velocity Template for DisplayUsernamePasswordPage view-state
+##
+## Velocity context will contain the following properties
+## (Comments about context properties omitted for brevity)
+##
+#set ($rpContext = $profileRequestContext.getSubcontext('net.shibboleth.idp.profile.context.RelyingPartyContext'))
+#set ($username = $authenticationContext.getSubcontext('net.shibboleth.idp.authn.context.UsernamePasswordContext', true).getUsername())
+#set ($passwordEnabled = false)
+#if (!$passwordPrincipals or $passwordPrincipals.isEmpty() or $authenticationContext.isAcceptable($passwordPrincipals))
+  #set ($passwordEnabled = true)
+#end
+##
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JST 로그인</title>
+    <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/login.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
+        body { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .container { display: flex; width: 100%; max-width: 1200px; height: 80vh; }
+        .illustration { flex: 1; background-color: #f0f0f0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .illustration h2 { margin-bottom: 20px; }
+        .login-form-container { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: space-between; }
+        .top-right-image { align-self: flex-end; width: 100px; margin-bottom: 20px; }
+        .login-form { width: 100%; max-width: 400px; margin: 0 auto; }
+        .logo img { width: 200px; margin-bottom: 20px; }
+        .form-header { margin-bottom: 20px; }
+        .form-header a { color: #666; }
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group input { width: 100%; padding: 10px 40px; border: 1px solid #ccc; border-radius: 5px; }
+        .input-group img { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; }
+        .toggle-password { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; }
+        .links { text-align: right; margin-bottom: 20px; }
+        .links a { color: #666; text-decoration: none; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .mt20 { margin-top: 20px; }
+        .bottom-content { text-align: center; }
+        .jst-logo { width: 100px; margin-bottom: 10px; }
+        .copyright { font-size: 12px; color: #666; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; height: auto; }
+            .illustration { display: none; }
+            .login-form-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="illustration">
+            <h2>Login</h2>
+            <img src="$request.getContextPath()/images/login_left_01.svg" alt="Main illustration" class="main-image">
+        </div>
+        <div class="login-form-container">
+            <img src="$request.getContextPath()/images/logo_jst.svg" alt="JST logo" class="top-right-image">
+            <div class="login-form">
+                <div class="logo">
+                    <img src="$request.getContextPath()/images/logo/011.png" alt="전북기전대 로고">
+                </div>
+                <div class="form-header">
+                    <span>Sign in</span>
+                    <a href="#"> / Sign up</a>
+                </div>
+                <form action="$flowExecutionUrl" method="post">
+                    #parse("csrf/csrf.vm")
+                    <div class="input-group">
+                        <img src="$request.getContextPath()/images/icon_1.svg" alt="ID icon">
+                        <input type="text" id="username" name="j_username" placeholder="ID" required value="#if($username)$encoder.encodeForHTML($username)#end">
+                    </div>
+                    <div class="input-group">
+                        <img src="$request.getContextPath()/images/icon_2.svg" alt="Password icon">
+                        <input type="password" id="password" name="j_password" placeholder="Password" required>
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <img src="$request.getContextPath()/images/icon_3.svg" alt="Toggle password visibility" id="toggleIcon">
+                        </span>
+                    </div>
+                    <div class="links">
+                        <a href="#">Forgot Account?</a> <a href="#" class="a_2"> / reset</a>
+                    </div>
+                    <button type="submit" name="_eventId_proceed">Login</button>
+                </form>
+                <div class="links mt20">
+                    <a href="#">Don't Have an Account? Sign Up</a>
+                </div>
+            </div>
+            <div class="bottom-content">
+                <img src="$request.getContextPath()/images/logo_jst.svg" alt="JST logo" class="jst-logo">
+                <div class="copyright">
+                    JST 전북기전대<br>
+                    Copyright © 2024 JST. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var toggleIcon = document.getElementById('toggleIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.src = '$request.getContextPath()/images/icon_5.svg';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.src = '$request.getContextPath()/images/icon_3.svg';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="사각형_1430" data-name="사각형 1430" width="16.478" height="12.738" transform="translate(0 0)" fill="#abb3bb"/>
+    </clipPath>
+  </defs>
+  <g id="그룹_3480" data-name="그룹 3480" transform="translate(-547.75 -427.876)">
+    <g id="Component_Icon_Hide" data-name="Component/Icon/Hide" transform="translate(547.75 427.876)">
+      <rect id="Rectangle_181" data-name="Rectangle 181" width="24" height="24" fill="#abb3bb" opacity="0"/>
+    </g>
+    <g id="그룹_3479" data-name="그룹 3479" transform="translate(551.511 433.508)">
+      <g id="그룹_3477" data-name="그룹 3477" transform="translate(0 -0.001)" clip-path="url(#clip-path)">
+        <path id="패스_2282" data-name="패스 2282" d="M16.2,5.1A8.76,8.76,0,0,0,.278,5.1a3.016,3.016,0,0,0,0,2.53,8.76,8.76,0,0,0,15.921,0,3.009,3.009,0,0,0,0-2.529M14.752,6.966a7.167,7.167,0,0,1-13.028,0h0a1.426,1.426,0,0,1,0-1.2,7.167,7.167,0,0,1,13.029,0,1.42,1.42,0,0,1,0,1.2" transform="translate(0 0.002)" fill="#abb3bb"/>
+        <path id="패스_2283" data-name="패스 2283" d="M614.091,384.922a3.185,3.185,0,1,0,3.185,3.185,3.188,3.188,0,0,0-3.185-3.185m0,4.777a1.592,1.592,0,1,1,1.592-1.592,1.594,1.594,0,0,1-1.592,1.592" transform="translate(-605.852 -381.737)" fill="#abb3bb"/>
+      </g>
+    </g>
+  </g>
+</svg>

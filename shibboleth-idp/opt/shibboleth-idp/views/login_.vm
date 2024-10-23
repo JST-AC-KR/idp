@@ -1,0 +1,91 @@
+##
+## Velocity Template for DisplayUsernamePasswordPage view-state
+##
+## Velocity context will contain the following properties
+## (Comments about context properties omitted for brevity)
+##
+#set ($rpContext = $profileRequestContext.getSubcontext('net.shibboleth.idp.profile.context.RelyingPartyContext'))
+#set ($username = $authenticationContext.getSubcontext('net.shibboleth.idp.authn.context.UsernamePasswordContext', true).getUsername())
+#set ($passwordEnabled = false)
+#if (!$passwordPrincipals or $passwordPrincipals.isEmpty() or $authenticationContext.isAcceptable($passwordPrincipals))
+  #set ($passwordEnabled = true)
+#end
+##
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전북대학교 로그인</title>
+    <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/font.css" />
+    <style>
+        /* 스타일 내용은 이전과 동일하게 유지 */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="illustration">
+            <h2>Login</h2>
+            <img src="$request.getContextPath()/images/login_left_01.svg" alt="Main illustration" class="main-image">
+        </div>
+        <div class="login-form-container">
+            <img src="$request.getContextPath()/images/logo_jst.svg" alt="JST logo" class="top-right-image">
+            <div class="login-form">
+                <div class="logo">
+                    <img src="$request.getContextPath()/images/logo_jeonbuk.svg" alt="전북대학교 로고">
+                </div>
+                <div class="form-header">
+                    <span>Sign in</span>
+                    <a href="#"> / Sign up</a>
+                </div>
+                #if ($authenticationErrorContext && $authenticationErrorContext.getClassifiedErrors().size() > 0)
+                    <div class="error-message" style="color: red; margin-bottom: 10px;">
+                        로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.
+                    </div>
+                #end
+                <form action="$flowExecutionUrl" method="post">
+                    #parse("csrf/csrf.vm")
+                    <div class="input-group">
+                        <img src="$request.getContextPath()/images/icon_1.svg" alt="ID icon">
+                        <input type="text" id="username" name="j_username" placeholder="ID" required value="#if($username)$encoder.encodeForHTML($username)#end">
+                    </div>
+                    <div class="input-group">
+                        <img src="$request.getContextPath()/images/icon_2.svg" alt="Password icon">
+                        <input type="password" id="password" name="j_password" placeholder="Password" required>
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <img src="$request.getContextPath()/images/icon_3.svg" alt="Toggle password visibility" id="toggleIcon">
+                        </span>
+                    </div>
+                    <div class="links">
+                        <a href="#">Forgot Account?</a> <a href="#" class="a_2"> / reset</a>
+                    </div>
+                    <button type="submit" name="_eventId_proceed">Login</button>
+                </form>
+                <div class="links mt20">
+                    <a href="#">Don't Have an Account? Sign Up</a>
+                </div>
+            </div>
+            <div class="bottom-content">
+                <img src="$request.getContextPath()/images/logo_jst.svg" alt="JST logo" class="jst-logo">
+                <div class="copyright">
+                    JST 전북대학교, Jeonbuk National University<br>
+                    Copyright © 2024 JST. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var toggleIcon = document.getElementById('toggleIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.src = '$request.getContextPath()/images/icon_5.svg';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.src = '$request.getContextPath()/images/icon_3.svg';
+            }
+        }
+    </script>
+</body>
+</html>

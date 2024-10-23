@@ -18,7 +18,7 @@
 #set ($activeSPSessions = $logoutContext and !$logoutContext.getSessionMap().isEmpty())
 #set ($regex = '(http|https):\/\/(?:.*\.)*(.+\..+?)\/')
 ##set ($redirectUrl = $logoutContext.getSessionMap().keySet().toArray()[0].replaceAll('auth/saml2/sp/simplesamlphp', ''))
-#set ($redirectUrl = 'https://ecampus.dscu.ac.kr') 
+#set ($redirectUrl = 'https://lms.jst.ac.kr') 
 ## add sp path
 <!DOCTYPE html>
 <html>

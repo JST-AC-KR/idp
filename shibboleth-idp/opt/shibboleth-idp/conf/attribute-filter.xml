@@ -44,7 +44,7 @@
     </AttributeFilterPolicy>
     <!-- https://ecampus.jnu.ac.kr/ -->
     <AttributeFilterPolicy id="lmssp">
-        <PolicyRequirementRule xsi:type="Requester" value="https://ecampus.dscu.ac.kr/auth/saml2/sp/metadata.php" />
+        <PolicyRequirementRule xsi:type="Requester" value="https://lms.jst.ac.kr/auth/saml2/sp/metadata.php" />
         <!-- 학과 -->
         <AttributeRule attributeID="organizationalUnitName">
             <PermitValueRule xsi:type="ANY" />
@@ -86,8 +86,8 @@
         </AttributeRule>
     </AttributeFilterPolicy>
 
-    <AttributeFilterPolicy id="devdscu">
-        <PolicyRequirementRule xsi:type="Requester" value="https://dev.dscu.ac.kr/sp/simplesamlphp" />
+    <AttributeFilterPolicy id="devjst">
+        <PolicyRequirementRule xsi:type="Requester" value="https://devsp.jst.ac.kr/sp/simplesamlphp" />
         <AttributeRule attributeID="organizationalUnitName">
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>

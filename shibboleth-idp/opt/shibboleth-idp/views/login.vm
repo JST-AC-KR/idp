@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전북대학교 로그인</title>
+    <title>JST 공유대학 로그인</title>
     <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/login.css" />
     <style>
         /* 스타일 내용은 이전과 동일하게 유지 */

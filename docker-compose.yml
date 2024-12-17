@@ -2,7 +2,7 @@ version: "3.1"
 services:
   rest:
     restart: unless-stopped
-    container_name: dscu_rest
+    container_name: jst_rest
     image: ${REST_IMAGE_NAME}
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
@@ -24,7 +24,7 @@ services:
 
   idp:
     restart: unless-stopped
-    container_name: dscu_idp
+    container_name: jst_idp
     build:
         context: ./shibboleth-idp/
         args:
